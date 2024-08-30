@@ -51,23 +51,41 @@ try{
         logger: {
             level: 'info',
             file: `./tmp/logs/${d.getFullYear()}-${(d.getMonth()+1 < 10)? '0' + (d.getMonth()+1):(d.getMonth()+1)}-${(d.getDate() < 10?'0'+d.getDate():d.getDate())}${ process.env.PINO_LOGFILE }`
-        }
+        },
+        trustProxy: true,
     });
 
     app.get('/', async (req,res) => {
-        // console.log(req);
+        console.log(req);
 
         res.code(200)
         .header('Content-Type', 'application/json; charset=utf-8')
         .send({ message: 'henloO \'woOrld\'' });
         app.log.info(`'/' get accessed`);
+
+        console.log(req);
     });
 
     app.options('/', async (req,res) => {
+        console.log(req);
+
         res.code(200)
         .header('content-type', 'application.json; charset=utf-8')
         .send({ message : '\'wOoptions\' wOoOOoptiOons' });
         app.log.info(`'/' options accessed`);
+
+        console.log(res);
+    });
+
+    app.get('/test', async (req,res) => {
+        console.log(req);
+
+        res.code(200)
+        .header('Content-Type', 'application/json; charset=utf-8')
+        .send({ message: 'henloO \'woOrld\'' });
+        app.log.info(`'/test' get accessed`);
+
+        console.log(res);
     });
 
     app.listen({ port: `${process.env.APP_PORT}`, host: `${process.env.APP_HOST}` }, function (err, address) {
